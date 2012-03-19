@@ -14,8 +14,8 @@ Installation
 
 ::
 
-    $ easy_install pytest-pep8 # or
-    $ pip install pytest-pep8
+    $ easy_install pytest-quickcheck # or
+    $ pip install pytest-quickcheck
 
 Quick Start
 ===========
