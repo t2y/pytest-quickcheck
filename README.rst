@@ -34,7 +34,7 @@ More complex data structure::
     @pytest.mark.randomize(
         ("d1", "{'x': int, 'y': [str, (int, int)], 'z': {'x': str}}")
     )
-    def test_generate_dict(prime, d1):
+    def test_generate_dict(d1):
         pass
 
 The *randomize* marker is able to use with *parametrize* marker.
