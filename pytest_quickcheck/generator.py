@@ -142,7 +142,7 @@ def generate(data, **kwargs):
     elif data is None:
         yield None
     else:
-        raise NotImplemented("Unknown data type")
+        raise NotImplementedError("Unknown data type")
 
 def retrieve_func(data):
     if isinstance(data, (list, set, tuple)):
