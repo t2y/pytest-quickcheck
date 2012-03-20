@@ -127,3 +127,7 @@ def test_generate_dict(d1):
     assert isinstance(d1, dict)
     assert isinstance(d1["x"], int)
     assert isinstance(d1["y"], str)
+
+@pytest.mark.randomize(("n1", "None"), ncalls=1)
+def test_generate_none(n1):
+    assert n1 is None
