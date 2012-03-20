@@ -98,7 +98,7 @@ There some options for each data type::
     set a tuple consist of attribute names in the `string module`_.
     (e.g. str_attrs=("digits", "punctuation")
 
-Probably, `pytest_quickcheck/tests/test_plugin_basic.py` is useful for
+Probably, `tests/test_plugin_basic.py` is useful for
 learning how to use these options.
 
 .. _string module: http://docs.python.org/library/string.html
