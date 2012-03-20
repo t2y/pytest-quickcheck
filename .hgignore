@@ -1,8 +1,10 @@
+.coverage
 .installed.cfg
 .pyc
 .swp
 .tox
 build
+htmlcov
 develop-eggs
 dist
 eggs
