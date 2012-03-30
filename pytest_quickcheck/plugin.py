@@ -21,9 +21,12 @@ def pytest_runtest_setup(item):
         pytest.skip("test with randomize only")
 
 def pytest_generate_tests(metafunc):
-    from pytest_quickcheck.generator import generate, parse
+    from pytest_quickcheck.generator import IS_PY3, generate, parse
     if hasattr(metafunc.function, "randomize"):
         randomize = metafunc.function.randomize
+        if IS_PY3 and hasattr(metafunc.function, "__annotations__"):
+            anns = metafunc.function.__annotations__.items()
+            randomize.args += tuple(i for i in anns)
         for argname, data_def in randomize.args:
             data_type, retrieve = parse(data_def)
             ncalls = randomize.kwargs.get("ncalls", 3)
