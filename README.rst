@@ -102,3 +102,26 @@ Probably, `tests/test_plugin_basic.py` is useful for
 learning how to use these options.
 
 .. _string module: http://docs.python.org/library/string.html
+
+Python 3
+========
+
+For Python 3, the signature of function is given as function annotation.
+
+::
+
+    @pytest.mark.randomize(min_num=0, max_num=2, ncalls=5)
+    def test_generate_int_anns(i1: int):
+        pass
+
+Mixed representation is also OK, but it might not be useful. 
+
+::
+
+    @pytest.mark.randomize(("i1", "int"), fixed_length=8)
+    def test_generate_arg_anns_mixed(i1, s1: str):
+        pass
+
+See also: `PEP 3107 -- Function Annotations`_
+
+.. _PEP 3107 -- Function Annotations: http://www.python.org/dev/peps/pep-3107/
