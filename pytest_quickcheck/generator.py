@@ -151,5 +151,5 @@ def retrieve_func(data):
         return next
 
 def parse(data_def):
-    data_type = eval(data_def)
+    data_type = eval(data_def) if isinstance(data_def, str) else data_def
     return data_type, retrieve_func(data_type)
