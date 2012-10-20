@@ -31,5 +31,5 @@ def pytest_generate_tests(metafunc):
             data_type, retrieve = parse(data_def)
             ncalls = randomize.kwargs.get("ncalls", 3)
             values = [retrieve(generate(data_type, **randomize.kwargs))
-                        for _ in range(ncalls)]
+                      for _ in range(ncalls)]
             metafunc.parametrize(argname, values)
