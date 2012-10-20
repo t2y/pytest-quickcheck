@@ -33,3 +33,10 @@ def test_gen_parametrize_with_randomize_dict(prime, d1):
     assert isinstance(d1["y"][1][1], int)
     assert isinstance(d1["z"], dict)
     assert isinstance(d1["z"]["x"], str)
+
+@pytest.mark.parametrize("prime", [3, 5, 7])
+@pytest.mark.randomize(s1=str, choices=["hello", "bye"])
+def test_gen_parametrize_with_randomize_str_substitution(prime, s1):
+    assert prime in [3, 5, 7]
+    assert isinstance(s1, str)
+    assert s1 in ("hello", "bye")

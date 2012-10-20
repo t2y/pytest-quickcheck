@@ -19,10 +19,14 @@ else:
     _MAX_INT = sys.maxint
 
 DATA_TYPE_OPTION = {
+    "common": ["ncalls", "choices"],
     "int": ["min_num", "max_num"],
     "float": ["min_num", "max_num", "positive"],
     "str": ["encoding", "fixed_length", "max_length", "str_attrs"],
 }
+
+DATA_TYPE_OPTIONS = set()
+DATA_TYPE_OPTIONS.update(*DATA_TYPE_OPTION.values())
 
 _MIN_FLOAT = -1e7
 _MAX_FLOAT = 1e7
