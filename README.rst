@@ -25,14 +25,14 @@ The signature is represented a tuple consist of argument name and its type.
 
 ::
 
-    @pytest.mark.randomize(("i1", "int"), ("i2", "int"), ncalls=1)
+    @pytest.mark.randomize(i1=int, i2=int, ncalls=1)
     def test_generate_ints(i1, i2):
         pass
 
 More complex data structure::
 
     @pytest.mark.randomize(
-        ("d1", "{'x': int, 'y': [str, (int, int)], 'z': {'x': str}}")
+        d1={'x': int, 'y': [str, (int, int)], 'z': {'x': str}}
     )
     def test_generate_dict(d1):
         pass
@@ -42,7 +42,7 @@ The *randomize* marker is able to use with *parametrize* marker.
 ::
 
     @pytest.mark.parametrize("prime", [2, 3, 5])
-    @pytest.mark.randomize(("i1", "int"), ("f1", "float"), ncalls=1)
+    @pytest.mark.randomize(i1=int, f1=float, ncalls=1)
     def test_gen_parametrize_with_randomize_int_float(prime, i1, f1):
         pass
 
@@ -118,10 +118,20 @@ Mixed representation is also OK, but it might not be useful.
 
 ::
 
-    @pytest.mark.randomize(("i1", "int"), fixed_length=8)
+    @pytest.mark.randomize(i1=int, fixed_length=8)
     def test_generate_arg_anns_mixed(i1, s1: str):
         pass
 
 See also: `PEP 3107 -- Function Annotations`_
 
 .. _PEP 3107 -- Function Annotations: http://www.python.org/dev/peps/pep-3107/
+
+Backward Compatibility
+======================
+
+Under 0.6 version, types were specified by strings containing the name
+of the type. It's still supported if you like.
+
+::
+
+    @pytest.mark.randomize(("i1", "int"), ("i2", "int"), ncalls=1)
