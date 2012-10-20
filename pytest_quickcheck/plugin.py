@@ -21,15 +21,24 @@ def pytest_runtest_setup(item):
         pytest.skip("test with randomize only")
 
 def pytest_generate_tests(metafunc):
-    from pytest_quickcheck.generator import IS_PY3, generate, parse
+    from pytest_quickcheck.generator import (DATA_TYPE_OPTIONS, IS_PY3,
+                                             generate, parse)
     if hasattr(metafunc.function, "randomize"):
         randomize = metafunc.function.randomize
+
         if IS_PY3 and hasattr(metafunc.function, "__annotations__"):
             anns = metafunc.function.__annotations__.items()
             randomize.args += tuple(i for i in anns)
+
+        ncalls = randomize.kwargs.pop("ncalls", 3)
+        data_option = {}
+        for opt in DATA_TYPE_OPTIONS:
+            if opt in randomize.kwargs:
+                data_option[opt] = randomize.kwargs.pop(opt)
+        randomize.args += tuple(i for i in randomize.kwargs.items())
+
         for argname, data_def in randomize.args:
             data_type, retrieve = parse(data_def)
-            ncalls = randomize.kwargs.get("ncalls", 3)
-            values = [retrieve(generate(data_type, **randomize.kwargs))
+            values = [retrieve(generate(data_type, **data_option))
                       for _ in range(ncalls)]
             metafunc.parametrize(argname, values)
