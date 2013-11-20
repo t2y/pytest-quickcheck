@@ -39,6 +39,12 @@ _ASCII_LEN = len(_ASCII) - 1
 _BOOL_CYCLE = cycle([True, False])
 
 
+class Generator(object):
+
+    def generate(self, **kwargs):
+        raise NotImplementedError()
+
+
 def choice_data(func):
     def _choice_data(*args, **kwargs):
         choices = kwargs.get("choices")
@@ -143,6 +149,8 @@ def generate(data, **kwargs):
         for key, value in data.items():
             _dict[key] = retrieve_func(value)(generate(value, **kwargs))
         yield _dict
+    elif isinstance(data, Generator):
+        yield data.generate(**kwargs)
     elif data is None:
         yield None
     else:

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 
+DEFAULT_NCALLS = 10
+
 def pytest_addoption(parser):
     parser.addoption("--randomize", action="store_true",
                      help="random data test")
@@ -30,7 +32,7 @@ def pytest_generate_tests(metafunc):
             anns = metafunc.function.__annotations__.items()
             randomize.args += tuple(i for i in anns)
 
-        ncalls = randomize.kwargs.pop("ncalls", 3)
+        ncalls = randomize.kwargs.pop("ncalls", DEFAULT_NCALLS)
         data_option = {}
         for opt in DATA_TYPE_OPTIONS:
             if opt in randomize.kwargs:
