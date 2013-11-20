@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-DEFAULT_NCALLS = 10
+DEFAULT_NCALLS = 3
 
 def pytest_addoption(parser):
     parser.addoption("--randomize", action="store_true",
