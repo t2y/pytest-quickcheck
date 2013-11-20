@@ -1,5 +1,12 @@
 """An attempt at http://www.chiark.greenend.org.uk/~sgtatham/algorithms/equivalence.html:
 
+In the general case, I do not believe there is a better solution than Mr. Tatham's.
+
+In the specific case where you may assume that the "universe" is huge
+relative to the set of all disconnected values, there may be something we can do...
+
+From the page, (c) Simon Tatham:
+
 Introduction
 
 An equivalence relation on a set is a partition of the set into classes. Two elements are considered equivalent if they are in the same class, and not if they are not.
@@ -25,11 +32,6 @@ For a sparse set - perhaps the set of all strings, or the set of basic blocks in
 Applications
 
 One clear application for equivalence classes with a disconnect operation is the algorithm that constructs a deterministic finite state machine from a nondeterministic one (used in regular expression processing). Most of the character set can be treated as equivalent: any character not mentioned explicitly in the regular expression behaves just the same as any other, and any two characters that are always used as part of the same character class are equivalent. For example, in the regular expression (0[xX][0-9A-Fa-f]+|[1-9][0-9]*|0[0-7]*), there is no need to treat all ASCII characters differently. The equivalence classes are [0], [Xx], [A-Fa-f], [1-7], [8-9], and everything else. So we only need to compute six transitions for each state, instead of 256. (back to algorithms index).
-
-In the general case, I do not believe there is a better solution than Mr. Tatham's.
-
-In the specific case where you may assume that the "universe" is huge
-relative to the set of all disconnected values, there is something we can do...
 
 """
 
@@ -146,3 +148,28 @@ def test_enumerate(equivalences, n_calls=100):
         assert len(canons2) == len(canons) + 1
         # the only different item is the new rest canon
         assert len(set(canons2).difference(set(canons))) == 1
+
+if __name__ == '__main__':
+    from traceback import print_exc
+
+    e = Equivalence()
+    while True:
+        try:
+            print "c number                - canonify"
+            print "e                       - enumerate"
+            print "d number1 number2 ...   - disconnect"
+            print "q                       - quit"
+            command = raw_input(":").split()
+            if command[0] == "q":
+                break
+            elif command[0] == "c":
+                assert len(command) == 2
+                print e.canonify(int(command[1]))
+            elif command[0] == "e":
+                print list(e.enumerate())
+            elif command[0] == "d":
+                e.disconnect(map(int, command[1:]))
+            else:
+                print "usage error"
+        except Exception:
+            print_exc()
