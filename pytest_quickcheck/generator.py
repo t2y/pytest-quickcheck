@@ -44,6 +44,11 @@ class Generator(object):
     def generate(self, **kwargs):
         raise NotImplementedError()
 
+    @staticmethod
+    def generate_data(data, **kwargs):
+        data_type, retrieve = parse(data)
+        return retrieve(generate(data_type, **kwargs))
+
 
 def choice_data(func):
     def _choice_data(*args, **kwargs):
