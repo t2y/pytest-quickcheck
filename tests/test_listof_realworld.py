@@ -46,6 +46,10 @@ class Equivalence(object):
     values is enough (what we really need is the ability to generate a
     "bigger" value for any value).
 
+    The important idea behind the algorithm is that of maintaining a
+    separate "rest" equivalence partition, outside of the data
+    structures for keeping track of everything,
+
     """
     def __init__(self, valid_item=0):
         """
@@ -69,8 +73,7 @@ class Equivalence(object):
         yield self._rest_canonical
 
     def disconnect(self, items):
-        # O(n) where n is number of items, also O(1) amortized for the dict of partitions
-        # TODO: convince myself of this ^^^
+        # O(n) amortized where n is number of items
         subset = set(items)
         if len(subset) == 0:
             return
@@ -85,11 +88,15 @@ class Equivalence(object):
                 virgin.append(item)
             else:
                 touching.setdefault(id(s), []).append(item)
+        # This looks like O(n) amortized: if there are k parts, on
+        # average each has n/k items, so it is O(k * n/k) == O(n).
+        # This calculation works for the edge cases where k is 1,
+        # sqrt(n), and n, so I trust it.
         for part in touching.itervalues():
             whole = self._item_to_subset[part[0]]
             if len(whole) != len(part):
                 # len(part) != 0, so some are in and some are out. Need to split.
-                whole.difference_update(part)
+                whole.difference_update(part)  # a.difference_update(b) is O(b)
                 self._create(part)
         if len(virgin) > 0:
             self._create(virgin)
