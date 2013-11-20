@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
+from pytest_quickcheck.data import listof, listof1
 
 @pytest.mark.randomize(("s1", "str"), fixed_length=32, ncalls=1)
 def test_create_file_with_randomize(tmpdir, s1):
@@ -40,3 +41,23 @@ def test_gen_parametrize_with_randomize_str_substitution(prime, s1):
     assert prime in [3, 5, 7]
     assert isinstance(s1, str)
     assert s1 in ("hello", "bye")
+
+@pytest.mark.randomize(l=listof(int))
+def test_listof(l):
+    assert isinstance(l, list)
+    assert all(isinstance(i, int) for i in l), l
+
+@pytest.mark.randomize(l=listof1(int))
+def test_listof1(l):
+    assert isinstance(l, list), l
+    assert len(l) >= 1
+
+@pytest.mark.randomize(l=listof(str, min_num=10, max_num=12))
+def test_listof_min_max(l):
+    assert isinstance(l, list)
+    assert 10 <= len(l) <= 12
+    assert all(isinstance(s, str) for s in l), l
+
+@pytest.mark.randomize(l=listof1(str, choices=["hodor"]))
+def test_listof_options(l):
+    assert list(set(l)) == ["hodor"]
