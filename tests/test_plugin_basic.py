@@ -45,6 +45,14 @@ def test_generate_str_with_octdigits(s1):
     assert isinstance(s1, str)
     assert s1 == "".join(i for i in s1 if string.octdigits)
 
+@pytest.mark.randomize(("s1", "str"),
+    str_attrs=("octdigits",), fixed_length=10
+)
+def test_generate_str_with_octdigits_and_fixed_length(s1):
+    assert isinstance(s1, str)
+    assert len(s1) == 10
+    assert s1 == "".join(i for i in s1 if string.octdigits)
+
 @pytest.mark.randomize(("s1", "str"), str_attrs=("digits", "punctuation"))
 def test_generate_str_with_attrs(s1):
     assert isinstance(s1, str)

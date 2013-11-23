@@ -83,8 +83,6 @@ def get_float(min_num=_MIN_FLOAT, max_num=_MAX_FLOAT,
 def get_str(encoding=None, fixed_length=None, max_length=32, str_attrs=None):
     base, end = str_attrs if str_attrs else (_ASCII, _ASCII_LEN)
     length = fixed_length if fixed_length else random.randint(0, max_length)
-    if end < length:
-        length = end
     s = "".join(getitem(base, random.randint(0, end)) for _ in range(length))
     if encoding and not IS_PY3:
         s = unicode(s, encoding)
