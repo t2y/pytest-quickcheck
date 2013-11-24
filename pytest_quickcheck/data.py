@@ -1,4 +1,4 @@
-from generator import parse, generate, Generator, get_int
+from pytest_quickcheck.generator import parse, generate, Generator, get_int
 
 
 class listof(Generator):
@@ -12,7 +12,8 @@ class listof(Generator):
     def generate(self, **kwargs):
         kwargs.update(self.options)
         k = get_int(self.min_num, self.max_num)
-        return [self.generate_data(self.data, **kwargs) for _ in xrange(k)]
+        return [self.generate_data(self.data, **kwargs) for _ in range(k)]
+
 
 def listof1(data, **options):
     options.setdefault("min_num", 1)
