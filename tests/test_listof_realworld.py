@@ -1,37 +1,82 @@
-"""An attempt at http://www.chiark.greenend.org.uk/~sgtatham/algorithms/equivalence.html:
+"""An attempt at
+http://www.chiark.greenend.org.uk/~sgtatham/algorithms/equivalence.html:
 
-In the general case, I do not believe there is a better solution than Mr. Tatham's.
+In the general case, I do not believe there is a better solution than
+Mr. Tatham's.
 
 In the specific case where you may assume that the "universe" is huge
-relative to the set of all disconnected values, there may be something we can do...
+relative to the set of all disconnected values, there may be something
+we can do...
 
 From the page, (c) Simon Tatham:
 
 Introduction
 
-An equivalence relation on a set is a partition of the set into classes. Two elements are considered equivalent if they are in the same class, and not if they are not.
+An equivalence relation on a set is a partition of the set into
+classes. Two elements are considered equivalent if they are in the
+same class, and not if they are not.
 
-In some situations, you might find yourself dealing with a set of elements and gradually discover ways in which they behave differently; so you might want to keep track of which ones are different and which ones are not.
+In some situations, you might find yourself dealing with a set of
+elements and gradually discover ways in which they behave differently;
+so you might want to keep track of which ones are different and which
+ones are not.
 
-(In other situations, you might find yourself dealing with a set of distinct elements and gradually discover that some are equivalent to others; but there's a known algorithm for this. It's made easier by the fact that if all elements start off distinct, you're unlikely ever to be dealing with too many of them to enumerate individually.)
+(In other situations, you might find yourself dealing with a set of
+distinct elements and gradually discover that some are equivalent to
+others; but there's a known algorithm for this. It's made easier by
+the fact that if all elements start off distinct, you're unlikely ever
+to be dealing with too many of them to enumerate individually.)
 Desired Properties
 
 So I'm looking for data structures with these operations:
 
-    Canonify. Given an element of the set, return a canonical element of the equivalence class containing that element. Any two equivalent elements should return the same element when canonified. Any two non-equivalent elements should return different elements.
-    Enumerate. Run through all the equivalence classes one by one, probably by means of their canonical elements.
-    Disconnect. Given a subset of the set, arrange that every equivalence class is either totally inside the subset or totally outside it, by means of splitting any class that crosses the boundary into two. 
+    Canonify. Given an element of the set, return a canonical element
+    of the equivalence class containing that element. Any two
+    equivalent elements should return the same element when
+    canonified. Any two non-equivalent elements should return
+    different elements.
+
+    Enumerate. Run through all the equivalence classes one by one,
+    probably by means of their canonical elements.
+
+    Disconnect. Given a subset of the set, arrange that every
+    equivalence class is either totally inside the subset or totally
+    outside it, by means of splitting any class that crosses the
+    boundary into two.
 
 Best Known Approximations
 
-For a small and dense set, where it's feasible to use the set elements as array indices, there's a reasonable implementation of all this: have an array A with one element for each set element. Then, for each set element e, let A[e] contain the canonical element of the class containing e. The canonical element of any class is defined to be the smallest-value element of that class.
+For a small and dense set, where it's feasible to use the set elements
+as array indices, there's a reasonable implementation of all this:
+have an array A with one element for each set element. Then, for each
+set element e, let A[e] contain the canonical element of the class
+containing e. The canonical element of any class is defined to be the
+smallest-value element of that class.
 
-Then the "canonify" operation is a simple array lookup, and the "enumerate" operation consists of going through the array looking for any e satisfying A[e] = e. Disconnection is O(N), and connection is also O(N); but by assumption N is small, so that isn't too big a problem.
+Then the "canonify" operation is a simple array lookup, and the
+"enumerate" operation consists of going through the array looking for
+any e satisfying A[e] = e. Disconnection is O(N), and connection is
+also O(N); but by assumption N is small, so that isn't too big a
+problem.
 
-For a sparse set - perhaps the set of all strings, or the set of basic blocks in a compilation process - I have no answer.
+For a sparse set - perhaps the set of all strings, or the set of basic
+blocks in a compilation process - I have no answer.
+
 Applications
 
-One clear application for equivalence classes with a disconnect operation is the algorithm that constructs a deterministic finite state machine from a nondeterministic one (used in regular expression processing). Most of the character set can be treated as equivalent: any character not mentioned explicitly in the regular expression behaves just the same as any other, and any two characters that are always used as part of the same character class are equivalent. For example, in the regular expression (0[xX][0-9A-Fa-f]+|[1-9][0-9]*|0[0-7]*), there is no need to treat all ASCII characters differently. The equivalence classes are [0], [Xx], [A-Fa-f], [1-7], [8-9], and everything else. So we only need to compute six transitions for each state, instead of 256. (back to algorithms index).
+One clear application for equivalence classes with a disconnect
+operation is the algorithm that constructs a deterministic finite
+state machine from a nondeterministic one (used in regular expression
+processing). Most of the character set can be treated as equivalent:
+any character not mentioned explicitly in the regular expression
+behaves just the same as any other, and any two characters that are
+always used as part of the same character class are equivalent. For
+example, in the regular expression
+(0[xX][0-9A-Fa-f]+|[1-9][0-9]*|0[0-7]*), there is no need to treat all
+ASCII characters differently. The equivalence classes are [0], [Xx],
+[A-Fa-f], [1-7], [8-9], and everything else. So we only need to
+compute six transitions for each state, instead of 256. (back to
+algorithms index).
 
 """
 
@@ -92,10 +137,10 @@ class Equivalence(object):
         # average each has n/k items, so it is O(k * n/k) == O(n).
         # This calculation works for the edge cases where k is 1,
         # sqrt(n), and n, so I trust it.
-        for part in touching.itervalues():
+        for part in touching.values():
             whole = self._item_to_subset[part[0]]
             if len(whole) != len(part):
-                # len(part) != 0, so some are in and some are out. Need to split.
+                # len(part) != 0, so some are in and some are out. Must split
                 whole.difference_update(part)  # a.difference_update(b) is O(b)
                 self._create(part)
         if len(virgin) > 0:
@@ -122,7 +167,7 @@ class Equivalence(object):
         the same item as long as s remains the same.
 
         """
-        return iter(s).next()
+        return next(iter(s))
 
 
 import pytest
@@ -162,21 +207,21 @@ if __name__ == '__main__':
     e = Equivalence()
     while True:
         try:
-            print "c number                - canonify"
-            print "e                       - enumerate"
-            print "d number1 number2 ...   - disconnect"
-            print "q                       - quit"
+            print("c number                - canonify")
+            print("e                       - enumerate")
+            print("d number1 number2 ...   - disconnect")
+            print("q                       - quit")
             command = raw_input(":").split()
             if command[0] == "q":
                 break
             elif command[0] == "c":
                 assert len(command) == 2
-                print e.canonify(int(command[1]))
+                print(e.canonify(int(command[1])))
             elif command[0] == "e":
-                print list(e.enumerate())
+                print(list(e.enumerate()))
             elif command[0] == "d":
                 e.disconnect(map(int, command[1:]))
             else:
-                print "usage error"
+                print("usage error")
         except Exception:
             print_exc()
