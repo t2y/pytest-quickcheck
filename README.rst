@@ -69,6 +69,7 @@ There some options for each data type::
       int: ['min_num', 'max_num']
       float: ['min_num', 'max_num', 'positive']
       str: ['encoding', 'fixed_length', 'max_length', 'str_attrs']
+      list_of, nonempty_list_of, dict_of: ['items', 'min_items', 'max_items']
 
 * common option
 
@@ -98,10 +99,69 @@ There some options for each data type::
     set a tuple consist of attribute names in the `string module`_.
     (e.g. str_attrs=("digits", "punctuation")
 
+* list_of, nonempty_list_of, dict_of
+
+  | **items**: number of items.
+  | **min_items**: lower limit on number of items.
+  | **max_items**: upper limit on number of items.
+
 Probably, `tests/test_plugin_basic.py` is useful for
 learning how to use these options.
 
 .. _string module: http://docs.python.org/library/string.html
+
+Generating Collections
+======================
+
+To generate a variable length list of items::
+
+::
+
+    from pytest import list_of
+
+    @pytest.mark.randomize(l=list_of(int))
+    def test_list_of(l):
+        pass
+
+
+You can control its size with the ``items``, ``min_items`` and
+``max_items`` options, or use the ``nonempty_list_of`` shortcut::
+
+::
+ 
+    @pytest.mark.randomize(l=list_of(int, num_items=10))
+    def test_list_of_length(l):
+        assert len(l) == 10
+
+    @pytest.mark.randomize(l=list_of(int, min_items=10, max_items=100))
+    def test_list_of_minimum_length(l):
+        assert len(l) >= 10
+
+    from pytest import nonempty_list_of
+
+    @pytest.mark.randomize(l=nonempty_list_of(int)
+    def test_list_of_minimum_length(l):
+        assert len(l) >= 1
+
+Options for data types work as usual::
+
+::
+
+    @pytest.mark.randomize(l=list_of(str, num_items=10), choices=["a", "b", "c"])
+    def test_list_of(l):
+        assert l[0] in ["a", "b", "c"]
+
+(Note what goes into the ``list_of()`` call and what goes outside.)
+
+You can also generate a dict::
+
+::
+
+    from pytest import dict_of
+    @pytest.mark.randomize(d=dict_of(str, int))
+    def test_list_of(l):
+        pass
+
 
 Python 3
 ========

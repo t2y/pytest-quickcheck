@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 import pytest
+from pytest_quickcheck.generator import Generator, \
+    list_of, nonempty_list_of, dict_of
 
 DEFAULT_NCALLS = 3
+
+def pytest_namespace():
+    return dict((x, globals()[x]) for x in [
+        "list_of", "nonempty_list_of", "dict_of", "Generator"])
 
 def pytest_addoption(parser):
     parser.addoption("--randomize", action="store_true",
@@ -9,12 +15,12 @@ def pytest_addoption(parser):
 
 def pytest_configure(config):
     from pytest_quickcheck.generator import DATA_TYPE_OPTION as opt
-    config.addinivalue_line("markers",
+    config.addinivalue_line(
+        "markers",
         "randomize((argname, type), **options): mark the test function with "
         "random data generating any data type.\n"
-        "  There are options for each data type: (see doc for details)\n"
-        "  {0}\n  {1}\n  {2}".format(
-            *("{0}: {1}".format(i, opt[i]) for i in opt)))
+        "  There are options for each data type: (see doc for details)" +
+        "\n  ".join("{0}: {1}".format(i, opt[i]) for i in opt))
 
 def pytest_runtest_setup(item):
     if not isinstance(item, item.Function):
