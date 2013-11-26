@@ -115,17 +115,14 @@ Generating Collections
 
 To generate a variable length list of items::
 
-::
-
     from pytest import list_of
 
     @pytest.mark.randomize(l=list_of(int))
     def test_list_of(l):
         pass
 
-
 You can control its size with the ``items``, ``min_items`` and
-``max_items`` options, or use the ``nonempty_list_of`` shortcut::
+``max_items`` options, or use the ``nonempty_list_of`` shortcut.
 
 ::
  
@@ -145,8 +142,6 @@ You can control its size with the ``items``, ``min_items`` and
 
 Options for data types work as usual::
 
-::
-
     @pytest.mark.randomize(l=list_of(str, num_items=10), choices=["a", "b", "c"])
     def test_list_of(l):
         assert l[0] in ["a", "b", "c"]
@@ -154,8 +149,6 @@ Options for data types work as usual::
 (Note what goes into the ``list_of()`` call and what goes outside.)
 
 You can also generate a dict::
-
-::
 
     from pytest import dict_of
     @pytest.mark.randomize(d=dict_of(str, int))
