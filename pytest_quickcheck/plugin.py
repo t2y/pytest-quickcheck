@@ -17,9 +17,9 @@ def pytest_configure(config):
     from pytest_quickcheck.generator import DATA_TYPE_OPTION as opt
     config.addinivalue_line(
         "markers",
-        "randomize((argname, type), **options): mark the test function with "
+        "randomize(argname=type, **options): mark the test function with "
         "random data generating any data type.\n"
-        "  There are options for each data type: (see doc for details)" +
+        "  There are options for each data type: (see doc for details)\n  " +
         "\n  ".join("{0}: {1}".format(i, opt[i]) for i in opt))
 
 def pytest_runtest_setup(item):

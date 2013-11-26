@@ -63,7 +63,7 @@ Usage
 There some options for each data type::
 
     $ py.test --markers
-    @pytest.mark.randomize((argname, type), **options): mark the test function with
+    @pytest.mark.randomize(argname=type, **options): mark the test function with
     random data generating any data type.
       There are options for each data type: (see doc for details)
       int: ['min_num', 'max_num']
