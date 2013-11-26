@@ -80,8 +80,6 @@ algorithms index).
 
 """
 
-from pytest_quickcheck.data import listof, listof1
-
 class Equivalence(object):
     """Keeps track of splitting a universe set into equivalence sets.
     Performs well when universe is huge or infinite and all other
@@ -171,8 +169,10 @@ class Equivalence(object):
 
 
 import pytest
-@pytest.mark.randomize(equivalence=listof1(int),
-                       unrelateds=listof1(listof(int)),
+from pytest import list_of, nonempty_list_of
+
+@pytest.mark.randomize(equivalence=nonempty_list_of(int),
+                       unrelateds=nonempty_list_of(list_of(int)),
                        min_num=-10, max_num=100)
 def test_canonify(equivalence, unrelateds, n_calls=1000):
     e = Equivalence()
@@ -187,7 +187,7 @@ def test_canonify(equivalence, unrelateds, n_calls=1000):
         for item in equivalence:
             assert e.canonify(item) == canon
 
-@pytest.mark.randomize(equivalences=listof(listof(int)))
+@pytest.mark.randomize(equivalences=list_of(list_of(int)))
 def test_enumerate(equivalences, n_calls=100):
     e = Equivalence()
     for equivalence in equivalences:
