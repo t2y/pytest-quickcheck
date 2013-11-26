@@ -23,6 +23,7 @@ DATA_TYPE_OPTION = {
     "int": ["min_num", "max_num"],
     "float": ["min_num", "max_num", "positive"],
     "str": ["encoding", "fixed_length", "max_length", "str_attrs"],
+    "*_of": ["items", "min_items", "max_items"],
 }
 
 DATA_TYPE_OPTIONS = set()
@@ -37,17 +38,6 @@ _ASCII = ascii_letters
 _ASCII_LEN = len(_ASCII) - 1
 
 _BOOL_CYCLE = cycle([True, False])
-
-
-class Generator(object):
-
-    def generate(self, **kwargs):
-        raise NotImplementedError()
-
-    @staticmethod
-    def generate_data(data, **kwargs):
-        data_type, retrieve = parse(data)
-        return retrieve(generate(data_type, **kwargs))
 
 
 def choice_data(func):
@@ -157,7 +147,68 @@ def generate(data, **kwargs):
     elif data is None:
         yield None
     else:
-        raise NotImplementedError("Unknown data type")
+        raise NotImplementedError("Unknown data type: %s" % data)
+
+class Generator(object):
+
+    def __init__(self, **options):
+        self.options = options
+
+    def generate(self, **kwargs):
+        raise NotImplementedError()
+
+    @staticmethod
+    def generate_data(data, **kwargs):
+        data_type, retrieve = parse(data)
+        return retrieve(generate(data_type, **kwargs))
+
+class list_of(Generator):
+    def __init__(self, data, **kwargs):
+        self.data = data
+        super(list_of, self).__init__(**kwargs)
+
+    def generate(self, **kwargs):
+        k = _options_to_num_items(self.options)
+
+        return [self.generate_data(self.data, **kwargs) for _ in range(k)]
+
+def _options_to_num_items(options):
+        options = dict(options)
+        min_items = options.pop("min_items", 0)
+        max_items = options.pop("max_items", 20)
+        if "items" in options:
+            min_items = max_items = options.pop("items")
+        assert min_items >= 0
+        assert max_items >= min_items
+        if options:
+            raise NotImplementedError(
+                "generator does not take an option '%s', "
+                "try giving it as a keyword argument to "
+                "the randomize() function" %
+                next(iter(options)))
+        return get_int(min_items, max_items)
+
+def nonempty_list_of(data, **options):
+    options.setdefault("min_items", 1)
+    return list_of(data, **options)
+
+class dict_of(Generator):
+    def __init__(self, keys, values, **kwargs):
+        self.keys = keys
+        self.values = values
+        super(dict_of, self).__init__(**kwargs)
+
+    def generate(self, **kwargs):
+        k = _options_to_num_items(self.options)
+
+        def gen(data, n):
+            return (self.generate_data(data, **kwargs) for _ in range(n))
+
+        # keys need to be unique
+        keys = set()
+        while len(keys) < k:
+            keys.update(gen(self.keys, k - len(keys)))
+        return dict(zip(keys, gen(self.values, k)))
 
 def retrieve_func(data):
     if isinstance(data, (list, set, tuple)):
