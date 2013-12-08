@@ -1,6 +1,6 @@
 from setuptools import setup
 
-VERSION = "0.7"
+VERSION = "0.8"
 REQUIRES = ["pytest>=2.2", "distribute"]
 
 try:
