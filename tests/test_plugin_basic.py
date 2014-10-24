@@ -40,6 +40,11 @@ def test_generate_str_with_max_length(s1):
     assert isinstance(s1, str)
     assert len(s1) <= 3
 
+@pytest.mark.randomize(("s1", "str"), min_length=3, ncalls=5)
+def test_generate_str_with_min_length(s1):
+    assert isinstance(s1, str)
+    assert len(s1) >= 3
+
 @pytest.mark.randomize(("s1", "str"), str_attrs=("octdigits",))
 def test_generate_str_with_octdigits(s1):
     assert isinstance(s1, str)
