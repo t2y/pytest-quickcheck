@@ -1,7 +1,7 @@
 from setuptools import setup
 
 VERSION = "0.8"
-REQUIRES = ["pytest>=2.2", "distribute"]
+REQUIRES = ["pytest>=2.2"]
 
 try:
     LONG_DESCRIPTION = "".join([
