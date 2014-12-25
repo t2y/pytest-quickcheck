@@ -83,7 +83,7 @@ def get_float(min_num=_MIN_FLOAT, max_num=_MAX_FLOAT,
 
 @choice_data
 @sanitize_option("str")
-def get_str(encoding=None, fixed_length=None, min_length=0, 
+def get_str(encoding=None, fixed_length=None, min_length=0,
             max_length=32, str_attrs=None):
     base, end = str_attrs if str_attrs else (_ASCII, _ASCII_LEN)
     length = fixed_length if fixed_length else random.randint(

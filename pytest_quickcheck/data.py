@@ -1,4 +1,4 @@
-from pytest_quickcheck.generator import parse, generate, Generator, get_int
+from pytest_quickcheck.generator import Generator, get_int
 
 
 class listof(Generator):

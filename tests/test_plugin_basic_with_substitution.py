@@ -65,7 +65,7 @@ def test_generate_strs_subs(s1, s2):
     assert isinstance(s2, str)
 
 @pytest.mark.randomize(s1=str, s2=str, choices=["hello", "bye"])
-def test_generate_strs_subs(s1, s2):
+def test_generate_strs_subs_with_choices(s1, s2):
     assert isinstance(s1, str)
     assert isinstance(s2, str)
     assert s1 in ("hello", "bye")
