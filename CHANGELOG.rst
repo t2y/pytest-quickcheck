@@ -2,6 +2,13 @@
 ChangeLog
 =========
 
+0.8.1 (2014-12-25)
+------------------
+
+* support min_length for str data type
+* removed distribute dependency
+* add pytest-flakes testing
+
 0.8 (2013-12-08)
 ----------------
 
