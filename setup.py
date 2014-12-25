@@ -1,6 +1,6 @@
 from setuptools import setup
 
-VERSION = "0.8"
+VERSION = "0.8.1"
 REQUIRES = ["pytest>=2.2"]
 
 try:
@@ -39,5 +39,5 @@ setup(
     packages=["pytest_quickcheck"],
     entry_points={"pytest11": ["quickcheck = pytest_quickcheck.plugin"]},
     install_requires=REQUIRES,
-    tests_require=["tox", "pytest", "pytest-pep8"],
+    tests_require=["tox", "pytest", "pytest-pep8", "pytest-flakes"],
 )

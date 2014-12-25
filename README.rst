@@ -68,7 +68,7 @@ There some options for each data type::
       There are options for each data type: (see doc for details)
       int: ['min_num', 'max_num']
       float: ['min_num', 'max_num', 'positive']
-      str: ['encoding', 'fixed_length', 'max_length', 'str_attrs']
+      str: ['encoding', 'fixed_length', 'min_length', 'max_length', 'str_attrs']
       list_of, nonempty_list_of, dict_of: ['items', 'min_items', 'max_items']
 
 * common option
