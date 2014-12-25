@@ -56,7 +56,7 @@ def test_generate_arg_anns_mixed(i1, s1: str):
 
 @pytest.mark.parametrize("prime", [3, 5])
 @pytest.mark.randomize(("f1", "float"), min_num=-1.0, max_num=1.0)
-def test_generate_arg_anns_param_mixed(prime, f1, b1: bool):
+def test_generate_arg_anns_param_mixed1(prime, f1, b1: bool):
     assert prime in [3, 5]
     assert isinstance(f1, float)
     assert -1.0 <= f1 <= 1.0
@@ -65,7 +65,7 @@ def test_generate_arg_anns_param_mixed(prime, f1, b1: bool):
 @pytest.mark.parametrize("prime", [3, 5])
 @pytest.mark.randomize(("f1", "float"), min_num=-1.0, max_num=1.0)
 @pytest.mark.randomize(t1=(str, str), max_length=3)
-def test_generate_arg_anns_param_mixed(prime, f1, b1: bool, t1):
+def test_generate_arg_anns_param_mixed2(prime, f1, b1: bool, t1):
     assert prime in [3, 5]
     assert isinstance(f1, float)
     assert -1.0 <= f1 <= 1.0

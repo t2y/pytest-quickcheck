@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
-from pytest_quickcheck.generator import Generator, \
-    list_of, nonempty_list_of, dict_of
+from pytest_quickcheck.generator import Generator
+from pytest_quickcheck.generator import list_of, nonempty_list_of, dict_of
 
 DEFAULT_NCALLS = 3
 

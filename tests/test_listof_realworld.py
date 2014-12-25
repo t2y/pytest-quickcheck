@@ -211,7 +211,7 @@ if __name__ == '__main__':
             print("e                       - enumerate")
             print("d number1 number2 ...   - disconnect")
             print("q                       - quit")
-            command = raw_input(":").split()
+            command = raw_input(":").split()  # pragma: no flakes
             if command[0] == "q":
                 break
             elif command[0] == "c":
