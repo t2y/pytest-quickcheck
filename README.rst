@@ -1,3 +1,7 @@
+.. image:: https://drone.io/bitbucket.org/pytest-dev/pytest-quickcheck/status.png
+   :target: https://drone.io/bitbucket.org/pytest-dev/pytest-quickcheck/latest
+.. image:: https://pypip.in/v/pytest-quickcheck/badge.png
+   :target: https://pypi.python.org/pypi/pytest-quickcheck
 
 Requirements
 ------------
