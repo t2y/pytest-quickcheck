@@ -2,6 +2,11 @@
 ChangeLog
 =========
 
+0.8.2 (2015-03-02)
+------------------
+
+* transfer the code repository to pytest-dev
+
 0.8.1 (2014-12-25)
 ------------------
 
