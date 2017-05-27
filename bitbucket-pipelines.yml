@@ -3,7 +3,7 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: python:3.5.1
+image: python:3.6
 
 pipelines:
   custom:
@@ -11,14 +11,31 @@ pipelines:
       - step:
           script:
             - echo "run manually"
-            - pip install -U tox
+            - pip install -U pip
             - pip --version
-            - tox --version
-            - tox
+            - pip install -U  pytest pytest-pep8 pytest-flakes
+            - py.test -v --pep8 --flakes pytest_quickcheck tests
+          services:
+            - 3.3
+            - 3.4
+            - 3.5
+            - 3.6
   default:
     - step:
-        script: # Modify the commands below to build your repository.  
-          - pip install -U tox
-          - pip --version
+        script:
+          - pip install -U pip
           - tox --version
-          - tox
+          - tox -e py36
+
+definitions:
+  services:
+    2.7:
+      image: python:2.7
+    3.3:
+      image: python:3.3
+    3.4:
+      image: python:3.4
+    3.5:
+      image: python:3.5
+    3.6:
+      image: python:3.6
