@@ -7,36 +7,42 @@ image: python:3.6
 
 pipelines:
   custom:
-    manual:
+    py27:
       - step:
+          image: python:2.7
           script:
-            - echo "run manually"
-            - pip install -U pip setuptools
-            - pip --version
-            - pip install -U  pytest pytest-pep8 pytest-flakes
-            - python setup.py develop
-            - py.test -v --pep8 --flakes pytest_quickcheck tests
+            - pip install -U pip
+            - pip install -U tox
+            - tox --version
+            - tox -e py27
+    py33:
+      - step:
+          image: python:3.3
+          script:
+            - pip install -U pip
+            - pip install -U tox
+            - tox --version
+            - tox -e py33
+    py34:
+      - step:
+          image: python:3.4
+          script:
+            - pip install -U pip
+            - pip install -U tox
+            - tox --version
+            - tox -e py34
+    py35:
+      - step:
+          image: python:3.5
+          script:
+            - pip install -U pip
+            - pip install -U tox
+            - tox --version
+            - tox -e py35
   default:
     - step:
         script:
           - pip install -U pip
           - pip install -U tox
           - tox --version
-          - tox -e py33 -e py34 -e py35 -e py36
-        services:
-          - py33
-          - py34
-          - py35
-
-definitions:
-  services:
-    py27:
-      image: python:2.7
-    py33:
-      image: python:3.3
-    py34:
-      image: python:3.4
-    py35:
-      image: python:3.5
-    py36:
-      image: python:3.6
+          - tox -e py36
