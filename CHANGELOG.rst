@@ -2,6 +2,12 @@
 ChangeLog
 =========
 
+0.8.3 (2017-05-27)
+------------------
+
+* fix an issue related to pytest-3.1.0
+* drop supporting python 2.6 and 3.2
+
 0.8.2 (2015-03-02)
 ------------------
 

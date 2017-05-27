@@ -1,6 +1,6 @@
 from setuptools import setup
 
-VERSION = "0.8.2"
+VERSION = "0.8.3"
 REQUIRES = ["pytest>=2.2"]
 
 try:
@@ -39,7 +39,7 @@ setup(
     classifiers=CLASSIFIERS,
     keywords=["test", "pytest", "quickcheck"],
     author="Tetsuya Morimoto",
-    author_email="tetsuya dot morimoto at gmail dot com",
+    author_email="tetsuya.morimoto@gmail.com",
     url="https://bitbucket.org/pytest-dev/pytest-quickcheck",
     platforms=["linux", "osx", "unix", "win32"],
     packages=["pytest_quickcheck"],
