@@ -6,6 +6,15 @@
 image: python:3.5.1
 
 pipelines:
+  custom:
+    manual:
+      - step:
+          script:
+            - echo "run manually"
+            - pip install -U tox
+            - pip --version
+            - tox --version
+            - tox
   default:
     - step:
         script: # Modify the commands below to build your repository.  
