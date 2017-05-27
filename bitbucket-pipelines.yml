@@ -19,7 +19,6 @@ pipelines:
             - py33
             - py34
             - py35
-            - py36
   default:
     - step:
         script:
