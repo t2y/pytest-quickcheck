@@ -16,10 +16,10 @@ pipelines:
             - pip install -U  pytest pytest-pep8 pytest-flakes
             - py.test -v --pep8 --flakes pytest_quickcheck tests
           services:
-            - 3.3
-            - 3.4
-            - 3.5
-            - 3.6
+            - py33
+            - py34
+            - py35
+            - py36
   default:
     - step:
         script:
@@ -29,13 +29,13 @@ pipelines:
 
 definitions:
   services:
-    2.7:
+    py27:
       image: python:2.7
-    3.3:
+    py33:
       image: python:3.3
-    3.4:
+    py34:
       image: python:3.4
-    3.5:
+    py35:
       image: python:3.5
-    3.6:
+    py36:
       image: python:3.6
