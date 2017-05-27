@@ -16,17 +16,17 @@ pipelines:
             - pip install -U  pytest pytest-pep8 pytest-flakes
             - python setup.py develop
             - py.test -v --pep8 --flakes pytest_quickcheck tests
-          services:
-            - py33
-            - py34
-            - py35
   default:
     - step:
         script:
           - pip install -U pip
           - pip install -U tox
           - tox --version
-          - tox -e py36
+          - tox -e py33 -e py34 -e py35 -e py36
+        services:
+          - py33
+          - py34
+          - py35
 
 definitions:
   services:
