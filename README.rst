@@ -1,12 +1,7 @@
-.. image:: https://drone.io/bitbucket.org/pytest-dev/pytest-quickcheck/status.png
-   :target: https://drone.io/bitbucket.org/pytest-dev/pytest-quickcheck/latest
-.. image:: https://pypip.in/v/pytest-quickcheck/badge.png
-   :target: https://pypi.python.org/pypi/pytest-quickcheck
-
 Requirements
 ------------
 
-* Python 2.6 or 3.x and later
+* Python 2.7 or 3.3 and later
 
 Features
 --------
