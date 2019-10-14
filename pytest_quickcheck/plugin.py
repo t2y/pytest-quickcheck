@@ -5,10 +5,6 @@ from pytest_quickcheck.generator import list_of, nonempty_list_of, dict_of
 
 DEFAULT_NCALLS = 3
 
-def pytest_namespace():
-    return dict((x, globals()[x]) for x in [
-        "list_of", "nonempty_list_of", "dict_of", "Generator"])
-
 def pytest_addoption(parser):
     parser.addoption("--randomize", action="store_true",
                      help="random data test")
@@ -21,9 +17,15 @@ def pytest_configure(config):
         "random data generating any data type.\n"
         "  There are options for each data type: (see doc for details)\n  " +
         "\n  ".join("{0}: {1}".format(i, opt[i]) for i in opt))
+        
+    pytest.list_of = globals()["list_of"]
+    pytest.nonempty_list_of = globals()["nonempty_list_of"]
+    pytest.dict_of = globals()["dict_of"]
+    pytest.Generator = globals()["Generator"]
+
 
 def pytest_runtest_setup(item):
-    if not isinstance(item, item.Function):
+    if not isinstance(item, pytest.Function):
         return
     if item.config.option.randomize and not hasattr(item.obj, 'randomize'):
         pytest.skip("test with randomize only")
