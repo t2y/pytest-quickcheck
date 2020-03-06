@@ -1,7 +1,7 @@
 from setuptools import setup
 
 VERSION = "0.8.3"
-REQUIRES = ["pytest>=2.2"]
+REQUIRES = ["pytest >= 2.2, < 3.6"]
 
 try:
     LONG_DESCRIPTION = "".join([
@@ -18,12 +18,12 @@ CLASSIFIERS = [
     "Operating System :: Microsoft :: Windows",
     "Operating System :: POSIX",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 2.6",
     "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.2",
-    "Programming Language :: Python :: 3.3",
-    "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
     "Topic :: Utilities",
     "Topic :: Software Development :: Testing",
     "Topic :: Software Development :: Libraries",
@@ -45,5 +45,5 @@ setup(
     packages=["pytest_quickcheck"],
     entry_points={"pytest11": ["quickcheck = pytest_quickcheck.plugin"]},
     install_requires=REQUIRES,
-    tests_require=["tox", "pytest", "pytest-pep8", "pytest-flakes"],
+    tests_require=["tox", "pytest", "pytest-codestyle", "pytest-flakes"],
 )

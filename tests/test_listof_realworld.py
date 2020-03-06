@@ -201,6 +201,7 @@ def test_enumerate(equivalences, n_calls=100):
         # the only different item is the new rest canon
         assert len(set(canons2).difference(set(canons))) == 1
 
+
 if __name__ == '__main__':
     from traceback import print_exc
 
