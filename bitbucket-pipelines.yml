@@ -3,7 +3,7 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: python:3.6
+image: python:3.7.2
 
 pipelines:
   custom:
@@ -15,22 +15,6 @@ pipelines:
             - pip install -U tox
             - tox --version
             - tox -e py27
-    py33:
-      - step:
-          image: python:3.3
-          script:
-            - pip install -U pip
-            - pip install -U tox
-            - tox --version
-            - tox -e py33
-    py34:
-      - step:
-          image: python:3.4
-          script:
-            - pip install -U pip
-            - pip install -U tox
-            - tox --version
-            - tox -e py34
     py35:
       - step:
           image: python:3.5
@@ -39,10 +23,18 @@ pipelines:
             - pip install -U tox
             - tox --version
             - tox -e py35
+    py36:
+      - step:
+          image: python:3.6
+          script:
+            - pip install -U pip
+            - pip install -U tox
+            - tox --version
+            - tox -e py36
   default:
     - step:
         script:
           - pip install -U pip
           - pip install -U tox
           - tox --version
-          - tox -e py36
+          - tox -e py37
