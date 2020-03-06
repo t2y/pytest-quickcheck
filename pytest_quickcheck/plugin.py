@@ -17,7 +17,7 @@ def pytest_configure(config):
         "random data generating any data type.\n"
         "  There are options for each data type: (see doc for details)\n  " +
         "\n  ".join("{0}: {1}".format(i, opt[i]) for i in opt))
-        
+
     pytest.list_of = globals()["list_of"]
     pytest.nonempty_list_of = globals()["nonempty_list_of"]
     pytest.dict_of = globals()["dict_of"]

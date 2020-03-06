@@ -178,20 +178,20 @@ class list_of(Generator):
         return [self.generate_data(self.data, **kwargs) for _ in range(k)]
 
 def _options_to_num_items(options):
-        options = dict(options)
-        min_items = options.pop("min_items", 0)
-        max_items = options.pop("max_items", 20)
-        if "items" in options:
-            min_items = max_items = options.pop("items")
-        assert min_items >= 0
-        assert max_items >= min_items
-        if options:
-            raise NotImplementedError(
-                "generator does not take an option '%s', "
-                "try giving it as a keyword argument to "
-                "the randomize() function" %
-                next(iter(options)))
-        return get_int(min_items, max_items)
+    options = dict(options)
+    min_items = options.pop("min_items", 0)
+    max_items = options.pop("max_items", 20)
+    if "items" in options:
+        min_items = max_items = options.pop("items")
+    assert min_items >= 0
+    assert max_items >= min_items
+    if options:
+        raise NotImplementedError(
+            "generator does not take an option '%s', "
+            "try giving it as a keyword argument to "
+            "the randomize() function" %
+            next(iter(options)))
+    return get_int(min_items, max_items)
 
 def nonempty_list_of(data, **options):
     options.setdefault("min_items", 1)
