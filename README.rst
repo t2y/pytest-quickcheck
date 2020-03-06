@@ -1,7 +1,7 @@
 Requirements
 ------------
 
-* Python 2.7 or 3.3 and later
+* Python 2.7 or 3.5 and later
 
 Features
 --------

@@ -2,6 +2,12 @@
 ChangeLog
 =========
 
+0.8.4 (2020-03-06)
+------------------
+
+* fix an issue related to pytest-4.x/5.x
+* drop supporting python 3.3 and 3.4
+
 0.8.3 (2017-05-27)
 ------------------
 
