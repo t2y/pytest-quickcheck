@@ -40,7 +40,7 @@ setup(
     keywords=["test", "pytest", "quickcheck"],
     author="Tetsuya Morimoto",
     author_email="tetsuya.morimoto@gmail.com",
-    url="https://bitbucket.org/pytest-dev/pytest-quickcheck",
+    url="https://github.com/t2y/pytest-quickcheck",
     platforms=["linux", "osx", "unix", "win32"],
     packages=["pytest_quickcheck"],
     entry_points={"pytest11": ["quickcheck = pytest_quickcheck.plugin"]},
