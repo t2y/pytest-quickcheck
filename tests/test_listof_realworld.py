@@ -80,6 +80,10 @@ algorithms index).
 
 """
 
+import pytest
+from pytest import list_of, nonempty_list_of
+
+
 class Equivalence(object):
     """Keeps track of splitting a universe set into equivalence sets.
     Performs well when universe is huge or infinite and all other
@@ -166,10 +170,6 @@ class Equivalence(object):
 
         """
         return next(iter(s))
-
-
-import pytest
-from pytest import list_of, nonempty_list_of
 
 @pytest.mark.randomize(equivalence=nonempty_list_of(int),
                        unrelateds=nonempty_list_of(list_of(int)),
