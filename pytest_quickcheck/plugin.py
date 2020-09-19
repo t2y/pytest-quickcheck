@@ -30,13 +30,9 @@ def pytest_runtest_setup(item):
     if item.config.option.randomize and not hasattr(item.obj, 'randomize'):
         pytest.skip("test with randomize only")
 
-def _compat_modify_args(markinfo, *args, **kwargs):
-    if hasattr(markinfo, 'add_mark'):  # guess pytest >= 3.1.0
-        from _pytest.mark import Mark
-        markinfo.add_mark(Mark(markinfo.name, args, kwargs))
-    else:
-        markinfo.args += args
-        markinfo.kwargs.update(kwargs)
+def _modify_args(markinfo, *args, **kwargs):
+    from _pytest.mark import Mark
+    markinfo.add_mark(Mark(markinfo.name, args, kwargs))
 
 def pytest_generate_tests(metafunc):
     from pytest_quickcheck.generator import (DATA_TYPE_OPTIONS, IS_PY3,
@@ -47,7 +43,7 @@ def pytest_generate_tests(metafunc):
         if IS_PY3 and hasattr(metafunc.function, "__annotations__"):
             anns = metafunc.function.__annotations__.items()
             args = tuple(i for i in anns)
-            _compat_modify_args(randomize, *args)
+            _modify_args(randomize, *args)
 
         ncalls = randomize.kwargs.pop("ncalls", DEFAULT_NCALLS)
         data_option = {}
@@ -55,7 +51,7 @@ def pytest_generate_tests(metafunc):
             if opt in randomize.kwargs:
                 data_option[opt] = randomize.kwargs.pop(opt)
         args = tuple(i for i in randomize.kwargs.items())
-        _compat_modify_args(randomize, *args)
+        _modify_args(randomize, *args)
 
         for argname, data_def in randomize.args:
             data_type, retrieve = parse(data_def)
