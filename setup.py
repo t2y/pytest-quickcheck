@@ -1,7 +1,7 @@
 from setuptools import setup
 
-VERSION = "0.8.4"
-REQUIRES = ["pytest >= 2.2"]
+VERSION = "0.8.5"
+REQUIRES = ["pytest>=4.0,<6.0.0"]
 
 try:
     LONG_DESCRIPTION = "".join([
@@ -20,7 +20,6 @@ CLASSIFIERS = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
@@ -36,6 +35,7 @@ setup(
     description="pytest plugin to generate random data inspired by QuickCheck",
     license="Apache License 2.0",
     long_description=LONG_DESCRIPTION,
+    long_description_content_type="text/x-rst",
     classifiers=CLASSIFIERS,
     keywords=["test", "pytest", "quickcheck"],
     author="Tetsuya Morimoto",
@@ -45,5 +45,5 @@ setup(
     packages=["pytest_quickcheck"],
     entry_points={"pytest11": ["quickcheck = pytest_quickcheck.plugin"]},
     install_requires=REQUIRES,
-    tests_require=["tox", "pytest", "pytest-codestyle", "pytest-flakes"],
+    tests_require=["tox", "pytest", "pytest-pycodestyle", "pytest-flakes"],
 )

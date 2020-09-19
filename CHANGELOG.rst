@@ -2,6 +2,13 @@
 ChangeLog
 =========
 
+0.8.5 (2020-09-19)
+------------------
+
+* fix a critical issue pytest cannot detect randomize marker
+* drop supporting pytest < 4.0.0
+* drop supporting python 3.5
+
 0.8.4 (2020-03-06)
 ------------------
 

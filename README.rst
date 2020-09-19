@@ -1,7 +1,7 @@
 Requirements
 ------------
 
-* Python 2.7 or 3.5 and later
+* Python 2.7 or 3.6 and later
 
 Features
 --------
@@ -13,7 +13,6 @@ Installation
 
 ::
 
-    $ easy_install pytest-quickcheck # or
     $ pip install pytest-quickcheck
 
 Quick Start
