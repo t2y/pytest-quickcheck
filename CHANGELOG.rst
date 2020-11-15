@@ -2,6 +2,12 @@
 ChangeLog
 =========
 
+0.8.6 (2020-11-15)
+------------------
+
+* fix ignored ncalls parameter when a function annotation is used
+* change to be able to use the same argument in randomize marker and function annotation
+
 0.8.5 (2020-09-19)
 ------------------
 

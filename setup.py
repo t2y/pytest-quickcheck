@@ -1,6 +1,6 @@
 from setuptools import setup
 
-VERSION = "0.8.5"
+VERSION = "0.8.6"
 REQUIRES = ["pytest>=4.0,<6.0.0"]
 
 try:
