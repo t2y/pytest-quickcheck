@@ -109,5 +109,5 @@ def pytest_generate_tests(metafunc):
         anns = metafunc.function.__annotations__.items()
         args = get_randomize_args(randomize, anns)
         if args:
-            randomize = Mark("randomize", args, {})
-            _set_parameterize(metafunc, randomize, ann_data_option)
+            _randomize = Mark("randomize", args, {})
+            _set_parameterize(metafunc, _randomize, ann_data_option)
