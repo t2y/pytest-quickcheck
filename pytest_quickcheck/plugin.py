@@ -39,15 +39,46 @@ def _has_pytestmark(metafunc):
         return False
     return True
 
+
+def _get_ncalls(randomize, data_option):
+    randomize_kwargs_ncalls = randomize.kwargs.pop("ncalls", None)
+    if randomize_kwargs_ncalls is not None:
+        return randomize_kwargs_ncalls
+
+    data_option_ncalls = data_option.pop("ncalls", None)
+    if data_option_ncalls is not None:
+        return data_option_ncalls
+
+    return DEFAULT_NCALLS
+
+
 def _set_parameterize(metafunc, randomize, data_option):
     from pytest_quickcheck.generator import generate, parse
 
-    ncalls = randomize.kwargs.pop("ncalls", DEFAULT_NCALLS)
+    ncalls = _get_ncalls(randomize, data_option)
     for argname, data_def in randomize.args:
         data_type, retrieve = parse(data_def)
         values = [retrieve(generate(data_type, **data_option))
                   for _ in range(ncalls)]
         metafunc.parametrize(argname, values)
+
+
+def exclude_randomize_args_in_annotations(randomize, anns):
+    randomize_args = {i[0] for i in randomize.args}
+    for ann in anns:
+        variable_name = ann[0]
+        if variable_name in randomize_args:
+            continue
+        if variable_name == "return":
+            continue
+        yield ann
+
+
+def get_randomize_args(randomize, anns):
+    if randomize is None:
+        return tuple(i for i in anns if i[0] != "return")
+    return tuple(exclude_randomize_args_in_annotations(randomize, anns))
+
 
 def pytest_generate_tests(metafunc):
     from pytest_quickcheck.generator import DATA_TYPE_OPTIONS, IS_PY3
@@ -55,6 +86,7 @@ def pytest_generate_tests(metafunc):
     if not _has_pytestmark(metafunc):
         return
 
+    randomize = None
     ann_data_option = {}
 
     for i, mark in enumerate(metafunc.function.pytestmark):
@@ -69,14 +101,13 @@ def pytest_generate_tests(metafunc):
             args = tuple(i for i in randomize.kwargs.items())
             if args:
                 randomize = Mark(randomize.name, args, {})
-                print(randomize)
                 metafunc.function.pytestmark[i] = randomize
 
             _set_parameterize(metafunc, randomize, data_option)
 
     if IS_PY3 and hasattr(metafunc.function, "__annotations__"):
         anns = metafunc.function.__annotations__.items()
-        args = tuple(i for i in anns)
+        args = get_randomize_args(randomize, anns)
         if args:
             randomize = Mark("randomize", args, {})
             _set_parameterize(metafunc, randomize, ann_data_option)
