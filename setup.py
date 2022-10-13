@@ -1,7 +1,7 @@
 from setuptools import setup
 
-VERSION = "0.8.6"
-REQUIRES = ["pytest>=4.0,<6.0.0"]
+VERSION = "0.9.0"
+REQUIRES = ["pytest>=4.0"]
 
 try:
     LONG_DESCRIPTION = "".join([
@@ -20,9 +20,10 @@ CLASSIFIERS = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Topic :: Utilities",
     "Topic :: Software Development :: Testing",
     "Topic :: Software Development :: Libraries",
