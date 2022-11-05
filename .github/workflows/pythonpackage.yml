@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.7, 3.8, 3.9, '3.10']
 
     steps:
     - uses: actions/checkout@v2
@@ -29,5 +29,5 @@ jobs:
         python setup.py develop
     - name: Test with pytest
       run: |
-        pip install "pytest<6.0.0" pytest-pycodestyle pytest-flakes
+        pip install pytest pytest-pycodestyle pytest-flakes
         py.test -v --pycodestyle --flakes pytest_quickcheck tests
